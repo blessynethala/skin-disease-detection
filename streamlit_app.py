@@ -2,6 +2,8 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+import base64
+import os
 
 IMG_SIZE = 224
 CLASSES = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
@@ -71,6 +73,15 @@ def load_trained_model():
     return tf.keras.models.load_model('final_skin_disease_model.keras')
 
 
+@st.cache_data
+def get_background_base64():
+    bg_path = os.path.join("assets", "background.png")
+    if os.path.exists(bg_path):
+        with open(bg_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    return None
+
+
 def predict(image, model):
     img = image.convert('RGB').resize((IMG_SIZE, IMG_SIZE))
     img_array = np.array(img)
@@ -83,7 +94,22 @@ def predict(image, model):
 st.set_page_config(page_title="SkinSense AI", page_icon="🩺", layout="centered")
 
 # ---- Custom CSS styling ----
-st.markdown("""
+_bg_b64 = get_background_base64()
+_bg_css = (
+    """
+    .stApp {
+        background-image:
+            linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
+            url("data:image/png;base64,BASE64_PLACEHOLDER");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    """.replace("BASE64_PLACEHOLDER", _bg_b64)
+    if _bg_b64 else ""
+)
+
+_css_template = """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -97,6 +123,7 @@ st.markdown("""
                     radial-gradient(circle at 50% 90%, #EFF6FF 0%, transparent 50%),
                     linear-gradient(160deg, #F8FAFF 0%, #F5F7FF 50%, #FAF5FF 100%);
     }
+    BG_IMAGE_CSS_PLACEHOLDER
     section[data-testid="stSidebar"] {
         background: linear-gradient(180deg, #EEF2FF, #F5F3FF);
     }
@@ -185,7 +212,10 @@ st.markdown("""
         box-shadow: 0 4px 14px rgba(99, 102, 241, 0.06);
     }
 </style>
-""", unsafe_allow_html=True)
+"""
+
+_final_css = _css_template.replace("BG_IMAGE_CSS_PLACEHOLDER", _bg_css)
+st.markdown(_final_css, unsafe_allow_html=True)
 
 # ---- Header ----
 st.markdown("""
