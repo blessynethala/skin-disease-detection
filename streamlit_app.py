@@ -98,6 +98,12 @@ _bg_b64 = get_background_base64()
 
 if _bg_b64 is None:
     st.warning("⚠️ Debug: background.png not found at assets/background.png")
+    st.write("Current working directory:", os.getcwd())
+    st.write("Files in current directory:", os.listdir("."))
+    if os.path.exists("assets"):
+        st.write("Files in assets/:", os.listdir("assets"))
+    else:
+        st.write("assets/ folder does not exist here")
 _bg_css = (
     """
     .stApp {
