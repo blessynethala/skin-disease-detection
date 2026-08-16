@@ -1,4 +1,0 @@
-tensorflow-cpu
-streamlit
-numpy
-pillow
