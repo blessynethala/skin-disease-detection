@@ -71,7 +71,7 @@ Try SkinSense AI live →  https://skin-disease-detection-ilszz3msvhj3hvwpsqqyzl
 
 ## 🏗️ Model & Training
 
-- "Architecture:" EfficientNetB0 (pretrained on ImageNet) + GlobalAveragePooling2D + Dense(256, ReLU) + Dropout(0.3) + Dense(7, Softmax)
+- **Architecture:** EfficientNetB0 (pretrained on ImageNet) + GlobalAveragePooling2D + Dense(256, ReLU) + Dropout(0.3) + Dense(7, Softmax)
 - **Training strategy:** Two-phase transfer learning
   - **Phase 1:** Base model frozen, only top layers trained (8 epochs)
   - **Phase 2:** Last 40 layers of the base model unfrozen and fine-tuned at a low learning rate (1e-5), for 20 epochs
