@@ -66,11 +66,17 @@ def predict(image, model):
     return preds
 
 
-st.set_page_config(page_title="AI Skin Disease Detection", page_icon="🩺", layout="centered")
+st.set_page_config(page_title="SkinSense AI", page_icon="🩺", layout="centered")
 
 # ---- Custom CSS styling ----
 st.markdown("""
 <style>
+    .stApp {
+        background: linear-gradient(160deg, #f0f4ff 0%, #eef7ff 40%, #f5f0ff 100%);
+    }
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #f0f4ff, #eef1ff);
+    }
     .main-header {
         text-align: center;
         padding: 1.5rem 0 0.5rem 0;
@@ -120,9 +126,10 @@ st.markdown("""
 # ---- Header ----
 st.markdown("""
 <div class="main-header">
-    <h1>🩺 AI Skin Disease Detection</h1>
+    <h1>🩺 SkinSense AI</h1>
 </div>
 <p class="subtitle">
+    An Intelligent Skin Disease Detection System Using Deep Learning<br>
     EfficientNetB0 · Transfer Learning · HAM10000 Dataset · 7 Lesion Classes
 </p>
 """, unsafe_allow_html=True)
