@@ -75,7 +75,7 @@ def load_trained_model():
 
 @st.cache_data
 def get_background_base64():
-    bg_path = os.path.join("assets", "background.png")
+    bg_path = "background.png"
     if os.path.exists(bg_path):
         with open(bg_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
@@ -95,15 +95,6 @@ st.set_page_config(page_title="SkinSense AI", page_icon="🩺", layout="centered
 
 # ---- Custom CSS styling ----
 _bg_b64 = get_background_base64()
-
-if _bg_b64 is None:
-    st.warning("⚠️ Debug: background.png not found at assets/background.png")
-    st.write("Current working directory:", os.getcwd())
-    st.write("Files in current directory:", os.listdir("."))
-    if os.path.exists("assets"):
-        st.write("Files in assets/:", os.listdir("assets"))
-    else:
-        st.write("assets/ folder does not exist here")
 _bg_css = (
     """
     .stApp {
