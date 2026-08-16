@@ -8,46 +8,60 @@ CLASSES = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
 
 DISEASE_INFO = {
     'akiec': {
-        'name': 'Actinic Keratoses (Pre-cancerous)',
+        'name': 'Actinic Keratoses',
+        'subtitle': 'Pre-cancerous',
         'description': 'A rough, scaly patch caused by years of sun exposure. Can potentially develop into skin cancer if untreated.',
         'risk': 'Moderate',
-        'risk_color': '#FFA500'
+        'risk_color': '#F59E0B',
+        'stage': 'Pre-cancerous'
     },
     'bcc': {
         'name': 'Basal Cell Carcinoma',
+        'subtitle': '',
         'description': 'The most common type of skin cancer. Grows slowly and rarely spreads, but needs treatment.',
         'risk': 'High',
-        'risk_color': '#FF4B4B'
+        'risk_color': '#EF4444',
+        'stage': 'Cancerous'
     },
     'bkl': {
         'name': 'Benign Keratosis',
+        'subtitle': '',
         'description': 'A non-cancerous skin growth, often appearing as a waxy or scaly raised patch.',
         'risk': 'Low',
-        'risk_color': '#00C853'
+        'risk_color': '#10B981',
+        'stage': 'Benign'
     },
     'df': {
         'name': 'Dermatofibroma',
+        'subtitle': '',
         'description': 'A common benign skin nodule, usually harmless, often caused by minor skin injury.',
         'risk': 'Low',
-        'risk_color': '#00C853'
+        'risk_color': '#10B981',
+        'stage': 'Benign'
     },
     'mel': {
         'name': 'Melanoma',
+        'subtitle': '',
         'description': 'The most serious and dangerous type of skin cancer. Can spread quickly if not treated early.',
         'risk': 'Critical',
-        'risk_color': '#D32F2F'
+        'risk_color': '#B91C1C',
+        'stage': 'Cancerous'
     },
     'nv': {
-        'name': 'Melanocytic Nevi (Common Mole)',
+        'name': 'Melanocytic Nevi',
+        'subtitle': 'Common Mole',
         'description': 'A common, usually harmless mole made of pigment-producing cells.',
         'risk': 'Low',
-        'risk_color': '#00C853'
+        'risk_color': '#10B981',
+        'stage': 'Benign'
     },
     'vasc': {
         'name': 'Vascular Lesions',
+        'subtitle': '',
         'description': 'Skin marks caused by blood vessel abnormalities, such as birthmarks or angiomas.',
         'risk': 'Low',
-        'risk_color': '#00C853'
+        'risk_color': '#10B981',
+        'stage': 'Benign'
     }
 }
 
@@ -71,54 +85,92 @@ st.set_page_config(page_title="SkinSense AI", page_icon="🩺", layout="centered
 # ---- Custom CSS styling ----
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+    html, body, [class*="css"] {
+        font-family: 'Poppins', sans-serif;
+    }
+
     .stApp {
-        background: linear-gradient(160deg, #f0f4ff 0%, #eef7ff 40%, #f5f0ff 100%);
+        background: radial-gradient(circle at 15% 10%, #EEF2FF 0%, transparent 45%),
+                    radial-gradient(circle at 85% 15%, #F5F3FF 0%, transparent 45%),
+                    radial-gradient(circle at 50% 90%, #EFF6FF 0%, transparent 50%),
+                    linear-gradient(160deg, #F8FAFF 0%, #F5F7FF 50%, #FAF5FF 100%);
     }
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #f0f4ff, #eef1ff);
+        background: linear-gradient(180deg, #EEF2FF, #F5F3FF);
     }
     .main-header {
         text-align: center;
-        padding: 1.5rem 0 0.5rem 0;
+        padding: 1.5rem 0 0.3rem 0;
     }
     .main-header h1 {
-        font-size: 2.3rem;
+        font-weight: 700;
+        font-size: 2.4rem;
         margin-bottom: 0.3rem;
-        background: linear-gradient(90deg, #4A90D9, #7B61FF);
+        background: linear-gradient(90deg, #6366F1, #8B5CF6);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .subtitle {
         text-align: center;
-        color: #666;
-        font-size: 1rem;
+        color: #6366F1;
+        font-size: 0.95rem;
+        font-weight: 500;
         margin-bottom: 1.5rem;
     }
     .result-card {
-        background: linear-gradient(135deg, #f8f9ff, #eef1ff);
-        border-radius: 16px;
-        padding: 1.5rem;
+        background: #FFFFFF;
+        border-radius: 18px;
+        padding: 1.6rem;
         margin-top: 1rem;
-        border: 1px solid #e0e4f5;
+        border: 1px solid #E5E7EB;
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08);
     }
     .risk-badge {
         display: inline-block;
-        padding: 0.25rem 0.9rem;
+        padding: 0.3rem 1rem;
         border-radius: 20px;
         color: white;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+    }
+    .stage-badge {
+        display: inline-block;
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        background: #EEF2FF;
+        color: #6366F1;
+        font-weight: 600;
+        font-size: 0.8rem;
     }
     .disclaimer-box {
-        background: #FFF8E1;
-        border-left: 4px solid #FFA500;
-        border-radius: 8px;
+        background: #FFFBEB;
+        border-left: 4px solid #F59E0B;
+        border-radius: 10px;
         padding: 1rem 1.2rem;
         margin-top: 1.5rem;
         font-size: 0.9rem;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+    }
+    .footer-box {
+        text-align: center;
+        color: #9CA3AF;
+        font-size: 0.8rem;
+        margin-top: 2.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #E5E7EB;
     }
     .stProgress > div > div {
         border-radius: 10px;
+        background-image: linear-gradient(90deg, #6366F1, #8B5CF6);
+    }
+    div[data-testid="stFileUploader"] {
+        background: #FFFFFF;
+        border-radius: 14px;
+        padding: 0.5rem;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.06);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -161,11 +213,12 @@ if uploaded_file is not None:
     with col2:
         st.markdown(f"""
         <div class="result-card">
-            <h3 style="margin-top:0;">{info['name']}</h3>
+            <h3 style="margin-top:0; color:#1F2937;">{info['name']}</h3>
             <span class="risk-badge" style="background-color:{info['risk_color']};">
                 {info['risk']} Risk
             </span>
-            <p style="margin-top:1rem; color:#444;">{info['description']}</p>
+            <span class="stage-badge">{info['stage']}</span>
+            <p style="margin-top:1rem; color:#4B5563;">{info['description']}</p>
         </div>
         """, unsafe_allow_html=True)
         st.metric("Model Confidence", f"{top_conf:.1f}%")
@@ -187,3 +240,10 @@ if uploaded_file is not None:
     """, unsafe_allow_html=True)
 else:
     st.info("👆 Upload an image above to get started.")
+
+st.markdown("""
+<div class="footer-box">
+    SkinSense AI · Built with EfficientNetB0 & Streamlit · Portfolio Project<br>
+    Disclaimer: Not a substitute for professional medical advice.
+</div>
+""", unsafe_allow_html=True)
