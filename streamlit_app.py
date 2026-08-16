@@ -112,10 +112,17 @@ st.markdown("""
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+    .subtitle-black {
+        text-align: center;
+        color: #1F2937;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+    }
     .subtitle {
         text-align: center;
         color: #6366F1;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 500;
         margin-bottom: 1.5rem;
     }
@@ -162,9 +169,14 @@ st.markdown("""
         padding-top: 1rem;
         border-top: 1px solid #E5E7EB;
     }
+    .stProgress > div > div > div {
+        border-radius: 10px !important;
+        background-color: transparent !important;
+        background-image: linear-gradient(90deg, #6366F1, #8B5CF6) !important;
+    }
     .stProgress > div > div {
-        border-radius: 10px;
-        background-image: linear-gradient(90deg, #6366F1, #8B5CF6);
+        background-color: #E5E7EB !important;
+        border-radius: 10px !important;
     }
     div[data-testid="stFileUploader"] {
         background: #FFFFFF;
@@ -180,15 +192,15 @@ st.markdown("""
 <div class="main-header">
     <h1>🩺 SkinSense AI</h1>
 </div>
-<p class="subtitle">
-    An Intelligent Skin Disease Detection System Using Deep Learning<br>
-    EfficientNetB0 · Transfer Learning · HAM10000 Dataset · 7 Lesion Classes
-</p>
+<p class="subtitle-black">An Intelligent Skin Disease Detection System Using Deep Learning</p>
+<p class="subtitle">EfficientNetB0 · Transfer Learning · HAM10000 Dataset · 7 Lesion Classes</p>
 """, unsafe_allow_html=True)
 
 st.markdown(
-    "Upload a clear, well-lit image of a skin lesion to get an **AI-assisted preliminary screening**. "
-    "This is a portfolio/learning project — **not** a substitute for professional medical diagnosis."
+    'Upload a clear, well-lit image of a skin lesion to get an '
+    '<span style="color:#3B82F6; font-weight:600;">AI-assisted preliminary screening</span>. '
+    'This is a portfolio/learning project — <strong>not</strong> a substitute for professional medical diagnosis.',
+    unsafe_allow_html=True
 )
 
 model = load_trained_model()
