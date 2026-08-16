@@ -15,7 +15,13 @@ DISEASE_INFO = {
         'description': 'A rough, scaly patch caused by years of sun exposure. Can potentially develop into skin cancer if untreated.',
         'risk': 'Moderate',
         'risk_color': '#F59E0B',
-        'stage': 'Pre-cancerous'
+        'stage': 'Pre-cancerous',
+        'precautions': [
+            'Avoid direct sun exposure, especially between 10 AM–4 PM',
+            'Use a broad-spectrum sunscreen (SPF 30+) daily',
+            'Get it examined by a dermatologist — early treatment prevents progression',
+            'Wear protective clothing and a wide-brimmed hat outdoors'
+        ]
     },
     'bcc': {
         'name': 'Basal Cell Carcinoma',
@@ -23,7 +29,13 @@ DISEASE_INFO = {
         'description': 'The most common type of skin cancer. Grows slowly and rarely spreads, but needs treatment.',
         'risk': 'High',
         'risk_color': '#EF4444',
-        'stage': 'Cancerous'
+        'stage': 'Cancerous',
+        'precautions': [
+            'Consult a dermatologist promptly for biopsy and treatment options',
+            'Avoid sun exposure and tanning beds',
+            'Monitor for any growth, bleeding, or changes in the lesion',
+            'Follow up regularly even after treatment — recurrence is possible'
+        ]
     },
     'bkl': {
         'name': 'Benign Keratosis',
@@ -31,7 +43,13 @@ DISEASE_INFO = {
         'description': 'A non-cancerous skin growth, often appearing as a waxy or scaly raised patch.',
         'risk': 'Low',
         'risk_color': '#10B981',
-        'stage': 'Benign'
+        'stage': 'Benign',
+        'precautions': [
+            'Usually no treatment needed, but monitor for changes',
+            'Avoid picking or scratching the lesion',
+            'See a doctor if it becomes itchy, inflamed, or changes shape',
+            'Routine skin checks are still a good habit'
+        ]
     },
     'df': {
         'name': 'Dermatofibroma',
@@ -39,7 +57,13 @@ DISEASE_INFO = {
         'description': 'A common benign skin nodule, usually harmless, often caused by minor skin injury.',
         'risk': 'Low',
         'risk_color': '#10B981',
-        'stage': 'Benign'
+        'stage': 'Benign',
+        'precautions': [
+            'Generally harmless — treatment is optional and cosmetic',
+            'Avoid repeated trauma or irritation to the area',
+            'Consult a doctor if it grows rapidly or becomes painful',
+            'No special sun precautions typically required'
+        ]
     },
     'mel': {
         'name': 'Melanoma',
@@ -47,7 +71,13 @@ DISEASE_INFO = {
         'description': 'The most serious and dangerous type of skin cancer. Can spread quickly if not treated early.',
         'risk': 'Critical',
         'risk_color': '#B91C1C',
-        'stage': 'Cancerous'
+        'stage': 'Cancerous',
+        'precautions': [
+            'Seek immediate consultation with a dermatologist/oncologist',
+            'Do NOT delay — early detection significantly improves outcomes',
+            'Avoid sun exposure and UV tanning completely',
+            'Get regular full-body skin checks if you have a history of moles'
+        ]
     },
     'nv': {
         'name': 'Melanocytic Nevi',
@@ -55,7 +85,13 @@ DISEASE_INFO = {
         'description': 'A common, usually harmless mole made of pigment-producing cells.',
         'risk': 'Low',
         'risk_color': '#10B981',
-        'stage': 'Benign'
+        'stage': 'Benign',
+        'precautions': [
+            'Monitor using the ABCDE rule (Asymmetry, Border, Color, Diameter, Evolving)',
+            'See a dermatologist if the mole changes size, shape, or color',
+            'Protect from excessive sun exposure',
+            'Annual skin checks are recommended, especially with many moles'
+        ]
     },
     'vasc': {
         'name': 'Vascular Lesions',
@@ -63,7 +99,13 @@ DISEASE_INFO = {
         'description': 'Skin marks caused by blood vessel abnormalities, such as birthmarks or angiomas.',
         'risk': 'Low',
         'risk_color': '#10B981',
-        'stage': 'Benign'
+        'stage': 'Benign',
+        'precautions': [
+            'Usually harmless and require no treatment',
+            'Avoid trauma to the area to prevent bleeding',
+            'Consult a doctor if it grows quickly or bleeds easily',
+            'Cosmetic removal is optional if desired'
+        ]
     }
 }
 
@@ -273,6 +315,10 @@ if uploaded_file is not None:
         conf = float(preds[idx])
         st.write(f"**{DISEASE_INFO[cls]['name']}** — {conf*100:.1f}%")
         st.progress(conf)
+
+    with st.expander("🛡️ Precautions & Recommendations", expanded=True):
+        for tip in info['precautions']:
+            st.markdown(f"- {tip}")
 
     st.markdown("""
     <div class="disclaimer-box">
