@@ -95,15 +95,19 @@ st.set_page_config(page_title="SkinSense AI", page_icon="🩺", layout="centered
 
 # ---- Custom CSS styling ----
 _bg_b64 = get_background_base64()
+
+if _bg_b64 is None:
+    st.warning("⚠️ Debug: background.png not found at assets/background.png")
 _bg_css = (
     """
     .stApp {
         background-image:
-            linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
+            linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.25)),
             url("data:image/png;base64,BASE64_PLACEHOLDER");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
+        background-repeat: no-repeat;
     }
     """.replace("BASE64_PLACEHOLDER", _bg_b64)
     if _bg_b64 else ""
